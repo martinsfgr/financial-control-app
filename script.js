@@ -9,17 +9,20 @@ let transactionsArray = [
   {id: 3, name: 'Teste', amount: 200}
 ];
 
-const showTransactions = (transaction) => {
-  let transactionType = transaction.amount > 0 ? 'plus' : 'minus';
+const showTransactions = ({ name, amount }) => {
+  let amountType = amount > 0 ? "plus" : "minus";
+  let operator = amount > 0 ? "+" : "-";
+  let amountWithoutOperator = Math.abs(amount);
 
-  let transactionElement = `
-    <li class=${transactionType}>
-      ${transaction.name}
-      <span>R$ ${transaction.amount}</span>
-      <button class="delete-btn">x</button>
-    </li>
-  `
-  transactionsUl.innerHTML += transactionElement;
+  const li = document.createElement('li');
+
+  li.classList.add(amountType);
+  li.innerHTML = `
+    ${name} <span>${operator} R$ ${amountWithoutOperator}</span>
+    <button class="delete-btn">x</button>
+  `;
+  
+  transactionsUl.append(li);
   updateBalanceValues();
 };
 
