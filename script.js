@@ -2,6 +2,10 @@ const transactionsUl = document.querySelector("#transactions");
 const balanceDisplay = document.querySelector("#balance");
 const incomeDisplay = document.querySelector("#money-plus");
 const expanseDisplay = document.querySelector("#money-minus");
+const form = document.querySelector("#form");
+const inputTransactionName = document.querySelector("#text");
+const inputTransactionAmount = document.querySelector("#amount");
+
 
 let transactionsArray = [
   {id: 1, name: 'Transação 1', amount: -200},
@@ -28,8 +32,7 @@ const updateBalanceValues = () => {
   const transactionAmounts = transactionsArray
     .map(transaction => transaction.amount);
   const totalBalance = transactionAmounts
-    .reduce((accumulator, transaction) => accumulator + transaction, 0)
-    .toFixed(2);
+    .reduce((accumulator, transaction) => accumulator + transaction, 0).toFixed(2);
   const income = transactionAmounts
     .filter(value => value > 0)
     .reduce((accumulator, value) => accumulator + value, 0)
@@ -44,7 +47,29 @@ const updateBalanceValues = () => {
   balanceDisplay.innerHTML = `R$ ${totalBalance}`;
 }
 
+form.addEventListener("submit", event => {
+  event.preventDefault();
+
+  if (inputTransactionAmount.value.trim() === "" || inputTransactionName.value.trim() === "") {
+    alert("O formulário não foi preenchido corretamente. Verifique e tente novamente.");
+    return
+  }
+
+  const transaction = {
+    id: 1,
+    name: inputTransactionName.value,
+    amount: Number(inputTransactionAmount.value)
+  };
+
+  inputTransactionName.value = "";
+  inputTransactionAmount.value = "";
+
+  transactionsArray.push(transaction);
+  init();
+});
+
 const init = () => {
+  transactionsUl.innerHTML = "";
   transactionsArray.forEach(showTransactions);
   updateBalanceValues();
 }
