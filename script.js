@@ -7,10 +7,7 @@ const inputTransactionName = document.querySelector("#text");
 const inputTransactionAmount = document.querySelector("#amount");
 
 
-let transactionsArray = [
-  {id: 1, name: 'Transação 1', amount: -200},
-  {id: 2, name: 'Transação 2', amount: 100},
-];
+let transactionsArray = new Array;
 
 const showTransactions = ({ name, amount }) => {
   let amountType = amount > 0 ? "plus" : "minus";
