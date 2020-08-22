@@ -4,9 +4,8 @@ const incomeDisplay = document.querySelector("#money-plus");
 const expanseDisplay = document.querySelector("#money-minus");
 
 let transactionsArray = [
-  {id: 1, name: 'Bolo', amount: -200},
-  {id: 2, name: 'Aluguel', amount: 100},
-  {id: 3, name: 'Teste', amount: 200}
+  {id: 1, name: 'Transação 1', amount: -200},
+  {id: 2, name: 'Transação 2', amount: 100},
 ];
 
 const showTransactions = ({ name, amount }) => {
@@ -23,7 +22,6 @@ const showTransactions = ({ name, amount }) => {
   `;
 
   transactionsUl.append(li);
-  updateBalanceValues();
 };
 
 const updateBalanceValues = () => {
@@ -46,4 +44,9 @@ const updateBalanceValues = () => {
   balanceDisplay.innerHTML = `R$ ${totalBalance}`;
 }
 
-transactionsArray.forEach(showTransactions);
+const init = () => {
+  transactionsArray.forEach(showTransactions);
+  updateBalanceValues();
+}
+
+init();
