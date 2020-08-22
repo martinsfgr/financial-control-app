@@ -9,16 +9,18 @@ const inputTransactionAmount = document.querySelector("#amount");
 
 let transactionsArray = new Array;
 
-const showTransactions = ({ name, amount }) => {
-  let amountType = amount > 0 ? "plus" : "minus";
-  let operator = amount > 0 ? "+" : "-";
-  let amountWithoutOperator = Math.abs(amount);
+const showTransactions = (transaction) => {
+  let amountType = transaction.amount > 0 ? "plus" : "minus";
+  let operator = transaction.amount > 0 ? "+" : "-";
+  let amountWithoutOperator = Math.abs(transaction.amount);
+  let position = transactionsArray.indexOf(transaction);
 
   const li = document.createElement('li');
 
   li.classList.add(amountType);
+  li.setAttribute("onclick", `deleteTransaction(${position})`);
   li.innerHTML = `
-    ${name} <span>${operator} R$ ${amountWithoutOperator}</span>
+    ${transaction.name} <span>${operator} R$ ${amountWithoutOperator}</span>
     <button class="delete-btn">x</button>
   `;
 
@@ -48,6 +50,11 @@ const generateUniqueId = () => {
   return Math.round(Math.random() * 1000);
 }
 
+const deleteTransaction = (position) => {
+  transactionsArray.splice(position, 1);
+  init();
+}
+
 form.addEventListener("submit", event => {
   event.preventDefault();
 
@@ -73,8 +80,6 @@ const init = () => {
   transactionsUl.innerHTML = "";
   transactionsArray.forEach(showTransactions);
   updateBalanceValues();
-
-  console.log(transactionsArray);
 }
 
 init();
