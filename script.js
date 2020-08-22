@@ -21,7 +21,7 @@ const showTransactions = ({ name, amount }) => {
     ${name} <span>${operator} R$ ${amountWithoutOperator}</span>
     <button class="delete-btn">x</button>
   `;
-  
+
   transactionsUl.append(li);
   updateBalanceValues();
 };
@@ -41,7 +41,7 @@ const updateBalanceValues = () => {
     .reduce((accumulator, value) => accumulator + value, 0)
     .toFixed(2);
 
-  incomeDisplay.innerHTML = `+${income}`;
+  incomeDisplay.innerHTML = `${income}`;
   expanseDisplay.innerHTML = `${expense}`;
   balanceDisplay.innerHTML = `R$ ${totalBalance}`;
 }
