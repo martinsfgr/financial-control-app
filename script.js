@@ -44,6 +44,10 @@ const updateBalanceValues = () => {
   balanceDisplay.innerHTML = `R$ ${totalBalance}`;
 }
 
+const generateUniqueId = () => {
+  return Math.round(Math.random() * 1000);
+}
+
 form.addEventListener("submit", event => {
   event.preventDefault();
 
@@ -53,7 +57,7 @@ form.addEventListener("submit", event => {
   }
 
   const transaction = {
-    id: 1,
+    id: generateUniqueId(),
     name: inputTransactionName.value,
     amount: Number(inputTransactionAmount.value)
   };
@@ -69,6 +73,8 @@ const init = () => {
   transactionsUl.innerHTML = "";
   transactionsArray.forEach(showTransactions);
   updateBalanceValues();
+
+  console.log(transactionsArray);
 }
 
 init();
