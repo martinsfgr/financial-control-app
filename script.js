@@ -6,8 +6,7 @@ const form = document.querySelector("#form");
 const inputTransactionName = document.querySelector("#text");
 const inputTransactionAmount = document.querySelector("#amount");
 
-
-let transactionsArray = new Array;
+let transactionsArray = JSON.parse(localStorage.getItem('transactions')) || [];
 
 const showTransactions = (transaction) => {
   let amountType = transaction.amount > 0 ? "plus" : "minus";
@@ -52,7 +51,12 @@ const generateUniqueId = () => {
 
 const deleteTransaction = (position) => {
   transactionsArray.splice(position, 1);
+  updateLocalStorage();
   init();
+}
+
+const updateLocalStorage = () => {
+  localStorage.setItem('transactions', JSON.stringify(transactionsArray));
 }
 
 form.addEventListener("submit", event => {
@@ -74,6 +78,7 @@ form.addEventListener("submit", event => {
 
   transactionsArray.push(transaction);
   init();
+  updateLocalStorage();
 });
 
 const init = () => {
