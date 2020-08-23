@@ -49,6 +49,19 @@ const generateUniqueId = () => {
   return Math.round(Math.random() * 1000);
 }
 
+const addNewTransaction = (name, amount) => {
+  const transaction = {
+    id: generateUniqueId(),
+    name: name,
+    amount: Number(amount)
+  };
+
+  transactionsArray.push(transaction);
+
+  inputTransactionName.value = "";
+  inputTransactionAmount.value = "";
+}
+
 const deleteTransaction = (position) => {
   transactionsArray.splice(position, 1);
   updateLocalStorage();
@@ -62,23 +75,17 @@ const updateLocalStorage = () => {
 form.addEventListener("submit", event => {
   event.preventDefault();
 
-  if (inputTransactionAmount.value.trim() === "" || inputTransactionName.value.trim() === "") {
+  let transactionName = inputTransactionName.value.trim();
+  let transactionAmount = inputTransactionAmount.value.trim();
+
+  if (transactionName === "" || transactionAmount === "") {
     alert("O formulário não foi preenchido corretamente. Verifique e tente novamente.");
     return
   }
 
-  const transaction = {
-    id: generateUniqueId(),
-    name: inputTransactionName.value,
-    amount: Number(inputTransactionAmount.value)
-  };
-
-  inputTransactionName.value = "";
-  inputTransactionAmount.value = "";
-
-  transactionsArray.push(transaction);
-  init();
+  addNewTransaction(transactionName, transactionAmount);
   updateLocalStorage();
+  init();
 });
 
 const init = () => {
