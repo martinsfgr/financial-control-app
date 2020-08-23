@@ -26,19 +26,26 @@ const showTransactions = (transaction) => {
   transactionsUl.append(li);
 };
 
+const getTransactionAmounts = () => transactionsArray
+  .map(transaction => transaction.amount);
+
+const getTotalBalance = () => getTransactionAmounts()
+  .reduce((accumulator, transaction) => accumulator + transaction, 0).toFixed(2);
+
+const getIncome = () => getTransactionAmounts()
+  .filter(value => value > 0)
+  .reduce((accumulator, value) => accumulator + value, 0)
+  .toFixed(2);
+
+const getExpense = () => getTransactionAmounts()
+  .filter(value => value < 0)
+  .reduce((accumulator, value) => accumulator + value, 0)
+  .toFixed(2);
+
 const updateBalanceValues = () => {
-  const transactionAmounts = transactionsArray
-    .map(transaction => transaction.amount);
-  const totalBalance = transactionAmounts
-    .reduce((accumulator, transaction) => accumulator + transaction, 0).toFixed(2);
-  const income = transactionAmounts
-    .filter(value => value > 0)
-    .reduce((accumulator, value) => accumulator + value, 0)
-    .toFixed(2);
-  const expense = transactionAmounts
-    .filter(value => value < 0)
-    .reduce((accumulator, value) => accumulator + value, 0)
-    .toFixed(2);
+  const totalBalance = getTotalBalance();
+  const income = getIncome();
+  const expense = getExpense();
 
   incomeDisplay.innerHTML = `${income}`;
   expanseDisplay.innerHTML = `${expense}`;
